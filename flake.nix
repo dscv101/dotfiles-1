@@ -38,6 +38,11 @@
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
+    nixos-anywhere = {
+      url = "github:numtide/nixos-anywhere";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.disko.follows = "disko";
+    };
 
     # Misc
     nix-ld.url = "github:Mic92/nix-ld";
@@ -77,24 +82,24 @@
         ];
       };
 
-  #    overlays = with inputs; [
-   #     neovim.overlays.x86_64-linux.neovim
-#
- #       flux.overlays.default
-  #    ];
+      #    overlays = with inputs; [
+      #     neovim.overlays.x86_64-linux.neovim
+      #
+      #       flux.overlays.default
+      #    ];
 
       systems.modules.nixos = with inputs; [
-        
+
         disko.nixosModules.disko
         {
           # Required for impermanence
           fileSystems."/persist".neededForBoot = true;
         }
-      
+
       ];
 
       templates = import ./templates { };
-      
+
     })
     # Outputs not managed by snowfall.
     // {
