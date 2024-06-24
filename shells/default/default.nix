@@ -1,4 +1,4 @@
-{pkgs, ...}:
+{pkgs, inputs, ...}:
 pkgs.mkShell {
   nativeBuildInputs = with pkgs; [
     treefmt
@@ -6,5 +6,6 @@ pkgs.mkShell {
     alejandra
     python310Packages.mdformat
     shfmt
+    inputs.nixos-anywhere.packages.${pkgs.system}.nixos-anywhere
   ];
 }
