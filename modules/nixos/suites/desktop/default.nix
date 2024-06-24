@@ -16,7 +16,6 @@ in {
   config = mkIf cfg.enable {
     desktop.hyprland.enable = true;
     apps.firefox.enable = true;
-    apps.discord.enable = true;
 
     apps.tools.gnupg.enable = true;
     apps.pass.enable = true;

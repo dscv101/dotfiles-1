@@ -20,7 +20,7 @@ in {
     apps.misc.enable = true;
 
     home.configFile."nix-init/config.toml".text = ''
-      maintainers = ["iogamaster"]
+      maintainers = ["dscv"]
       commit = true
     '';
 

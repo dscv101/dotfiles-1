@@ -1,7 +1,7 @@
 {sshKeyPath}: ''
   [user]
-  	name = IogaMaster
-  	email = iogamastercode@gmail.com
+  	name = dscv101
+  	email = derek.vitrano@gmail.com
       signingkey = ${sshKeyPath}
   [pull]
   	rebase = true

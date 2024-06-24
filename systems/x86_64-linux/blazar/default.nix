@@ -9,14 +9,12 @@
 
   suites.desktop.enable = true;
   suites.development.enable = true;
-  suites.gaming.enable = true;
-  suites.editing.enable = true;
 
   hardware.nvidia.enable = true;
   hardware.amd.enable = true;
   services.ssh.enable = true;
   environment.systemPackages = with pkgs; [
-    custom.mcman
+    
   ];
 
   # services.hydra = {
@@ -36,7 +34,6 @@
   # ];
 
   impermanence.enable = true;
-  virtualisation.arion.enable = true;
 
   networking.interfaces.enp0s31f6 = {
     name = "enp0s31f6";
@@ -44,6 +41,6 @@
   };
 
   # ======================== DO NOT CHANGE THIS ========================
-  system.stateVersion = "23.11";
+  system.stateVersion = "24.05";
   # ======================== DO NOT CHANGE THIS ========================
 }

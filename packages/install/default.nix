@@ -4,7 +4,7 @@
   ...
 }:
 writeShellScriptBin "install" ''
-  ${gum}/bin/gum style --border normal --margin "1" --padding "1 2" --border-foreground 212 "✨ IogaMaster's dotfiles installer ✨"
+  ${gum}/bin/gum style --border normal --margin "1" --padding "1 2" --border-foreground 212 "✨ dscv's dotfiles installer ✨"
   echo "This script will wipe the remote system!"
   ${gum}/bin/gum confirm "Cancel..." && exit
 
