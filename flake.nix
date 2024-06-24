@@ -102,11 +102,6 @@
 
       templates = import ./templates { };
 
-    })
-    # Outputs not managed by snowfall.
-    // {
-      hydraJobs = {
-        packages = { inherit (inputs.self.packages) "x86_64-linux"; };
-      };
-    };
+    });
+   
 }
