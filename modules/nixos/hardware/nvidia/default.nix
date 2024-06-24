@@ -1,45 +1,80 @@
+  #config = mkIf cfg.enable {
+    #services.xserver.videoDrivers = ["nvidia"];
+    #};
+
+   # environment.shellAliases = {nvidia-settings = "nvidia-settings --config='$XDG_CONFIG_HOME'/nvidia/settings";};
+
+    # Hyprland settings
+    # environment.sessionVariables.WLR_NO_HARDWARE_CURSORS = "1"; # Fix cursor rendering issue on wlr nvidia.
+
 {
-  options,
   config,
-  pkgs,
   lib,
+  pkgs,
+  namespace,
+  options,
   ...
 }:
-with lib;
-with lib.custom; let
-  cfg = config.hardware.nvidia;
-in {
-  options.hardware.nvidia = with types; {
-    enable = mkBoolOpt false "Enable drivers and patches for Nvidia hardware.";
+let
+  inherit (lib) mkDefault mkIf versionOlder;
+  inherit (lib.${namespace}) mkBoolOpt;
+  cfg = config.${namespace}.hardware.nvidia;
+
+  # use the latest possible nvidia package
+  nvStable = config.boot.kernelPackages.nvidiaPackages.stable.version;
+  nvBeta = config.boot.kernelPackages.nvidiaPackages.beta.version;
+
+  nvidiaPackage =
+    if (versionOlder nvBeta nvStable) then
+      config.boot.kernelPackages.nvidiaPackages.stable
+    else
+      config.boot.kernelPackages.nvidiaPackages.beta;
+in
+{
+  options.${namespace}.hardware.nvidia = {
+    enable = mkBoolOpt false "Whether or not to enable support for nvidia.";
   };
 
   config = mkIf cfg.enable {
-    services.xserver.videoDrivers = ["nvidia"];
-    hardware.nvidia.modesetting.enable = true;
+    boot.blacklistedKernelModules = [ "nouveau" ];
 
-    hardware.nvidia.package = let
-      rcu_patch = pkgs.fetchpatch {
-        url = "https://github.com/gentoo/gentoo/raw/c64caf53/x11-drivers/nvidia-drivers/files/nvidia-drivers-470.223.02-gpl-pfn_valid.patch";
-        hash = "sha256-eZiQQp2S/asE7MfGvfe6dA/kdCvek9SYa/FFGp24dVg=";
+    environment.systemPackages = with pkgs; [
+      nvfancontrol
+
+      nvtopPackages.nvidia
+
+      # mesa
+      mesa
+
+      # vulkan
+      vulkan-tools
+      vulkan-loader
+      vulkan-validation-layers
+      vulkan-extension-layer
+    ];
+
+    hardware = {
+      nvidia =  {
+        package = mkDefault nvidiaPackage;
+        modesetting.enable = mkDefault true;
+
+        powerManagement = {
+          enable = mkDefault true;
+          finegrained = mkDefault false;
+        };
+
+        open = mkDefault true;
+        nvidiaSettings = false;
+        nvidiaPersistenced = true;
+        forceFullCompositionPipeline = true;
       };
-    in
-      config.boot.kernelPackages.nvidiaPackages.mkDriver {
-        version = "535.154.05";
-        sha256_64bit = "sha256-fpUGXKprgt6SYRDxSCemGXLrEsIA6GOinp+0eGbqqJg=";
-        sha256_aarch64 = "sha256-G0/GiObf/BZMkzzET8HQjdIcvCSqB1uhsinro2HLK9k=";
-        openSha256 = "sha256-wvRdHguGLxS0mR06P5Qi++pDJBCF8pJ8hr4T8O6TJIo=";
-        settingsSha256 = "sha256-9wqoDEWY4I7weWW05F4igj1Gj9wjHsREFMztfEmqm10=";
-        persistencedSha256 = "sha256-d0Q3Lk80JqkS1B54Mahu2yY/WocOqFFbZVBh+ToGhaE=";
 
-        patches = [rcu_patch];
+      graphics = {
+        extraPackages = with pkgs; [ nvidia-vaapi-driver ];
+        extraPackages32 = with pkgs.pkgsi686Linux; [ nvidia-vaapi-driver ];
       };
 
-    environment.variables = {
-      CUDA_CACHE_PATH = "$XDG_CACHE_HOME/nv";
+      environment.shellAliases = {nvidia-settings = "nvidia-settings --config='$XDG_CONFIG_HOME'/nvidia/settings";};
     };
-    environment.shellAliases = {nvidia-settings = "nvidia-settings --config='$XDG_CONFIG_HOME'/nvidia/settings";};
-
-    # Hyprland settings
-    environment.sessionVariables.WLR_NO_HARDWARE_CURSORS = "1"; # Fix cursor rendering issue on wlr nvidia.
   };
 }
