@@ -5,7 +5,7 @@
   imports = [ ./hardware-configuration.nix 
               "${builtins.fetchTarball "https://github.com/nix-community/disko/archive/master.tar.gz"}/module
               ./disks.nix
-  ];
+            ];
 
   # Enable Bootloader
   system.boot.efi.enable = true;
