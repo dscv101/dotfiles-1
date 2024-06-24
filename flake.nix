@@ -93,10 +93,10 @@
       systems.modules.nixos = with inputs; [
 
         disko.nixosModules.disko
-        {
+      #  {
           # Required for impermanence
-          fileSystems."/persist".neededForBoot = true;
-        }
+       #   fileSystems."/persist".neededForBoot = true;
+       # }
 
       ];
 
