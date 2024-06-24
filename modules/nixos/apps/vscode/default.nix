@@ -1,18 +1,27 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
+{ options
+, config
+, lib
+, pkgs
+, ...
 }:
 with lib;
 with lib.custom; let
   cfg = config.custom.apps.vscode;
-in {
+in
+{
   options.custom.apps.vscode = with types; {
     enable = mkBoolOpt false "Whether or not to enable vscode.";
   };
 
   config =
-    mkIf cfg.enable {environment.systemPackages = with pkgs; [vscode];};
+    mkIf cfg.enable { environment.systemPackages = with pkgs; [ vscode ]; };
+
+  home.persist.directories = [
+    ".config/Code"
+    ".vscode"
+    ".wakatime"
+  ];
+
+  home.persist.files = [ ".wakatime.cfg" ".wakatime.bdb" ];
+
 }

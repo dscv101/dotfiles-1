@@ -1,14 +1,14 @@
-{
-  options,
-  config,
-  pkgs,
-  lib,
-  ...
+{ options
+, config
+, pkgs
+, lib
+, ...
 }:
 with lib;
 with lib.custom; let
   cfg = config.apps.neovim;
-in {
+in
+{
   options.apps.neovim = with types; {
     enable = mkBoolOpt false "Enable or disable neovim";
   };
@@ -25,12 +25,14 @@ in {
       pkgs.sumneko-lua-language-server
       pkgs.ripgrep
     ];
-
     home.persist.directories = [
-      ".config/Code"
-      ".vscode"
+      ".local/share/nvim"
+      ".vim"
+      ".wakatime"
     ];
 
-    
+    home.persist.files = [ ".wakatime.cfg" ".wakatime.bdb" ];
   };
+
+
 }
