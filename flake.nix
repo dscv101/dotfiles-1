@@ -73,7 +73,7 @@
       channels-config = {
         allowUnfree = true;
         permittedInsecurePackages = [
-          "electron-24.8.6"
+          "electron-25.9.0"
         ];
       };
 
@@ -92,12 +92,6 @@
         }
       
       ];
-
-      checks =
-        builtins.mapAttrs
-          (_system: deploy-lib:
-            deploy-lib.deployChecks inputs.self.deploy)
-          inputs.deploy-rs.lib;
 
       templates = import ./templates { };
       

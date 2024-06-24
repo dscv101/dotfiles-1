@@ -49,8 +49,6 @@ in {
 
     programs.dconf.enable = true;
 
-    environment.systemPackages = [pkgs.bluetuith pkgs.custom.sys pkgs.deploy-rs];
-
     system = {
       fonts.enable = true;
       locale.enable = true;
