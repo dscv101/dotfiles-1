@@ -1,9 +1,8 @@
-{
-  lib,
-  pkgs,
-  ...
+{ lib
+, pkgs
+, ...
 }: {
-  imports = [./hardware-configuration.nix];
+  imports = [ ./hardware-configuration.nix ];
 
   # Enable Bootloader
   system.boot.efi.enable = true;
@@ -14,6 +13,7 @@
   suites.editing.enable = true;
 
   hardware.nvidia.enable = true;
+  hardware.amd.enable = true;
   services.ssh.enable = true;
   environment.systemPackages = with pkgs; [
     custom.mcman
@@ -37,10 +37,6 @@
 
   impermanence.enable = true;
   virtualisation.arion.enable = true;
-
-  topology.self = {
-    hardware.info = "ThinkStation, 32GB RAM";
-  };
 
   networking.interfaces.enp0s31f6 = {
     name = "enp0s31f6";
