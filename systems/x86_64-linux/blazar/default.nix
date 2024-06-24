@@ -20,22 +20,6 @@
     
   ];
 
-  # services.hydra = {
-  #   enable = true;
-  #   hydraURL = "http://localhost:3000";
-  #   notificationSender = "hydra@localhost";
-  #   buildMachinesFiles = [];
-  #   useSubstitutes = true;
-  #
-  #   logo = ../../../.github/assets/flake.webp;
-  # };
-  #
-  # system.nix.extraUsers = [
-  #   "hydra"
-  #   "hydra-evaluator"
-  #   "hydra-queue-runner"
-  # ];
-
   impermanence.enable = true;
 
   networking.interfaces.enp0s31f6 = {
