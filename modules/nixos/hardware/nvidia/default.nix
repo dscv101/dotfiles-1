@@ -4,9 +4,7 @@
 
    # environment.shellAliases = {nvidia-settings = "nvidia-settings --config='$XDG_CONFIG_HOME'/nvidia/settings";};
 
-    # Hyprland settings
-    # environment.sessionVariables.WLR_NO_HARDWARE_CURSORS = "1"; # Fix cursor rendering issue on wlr nvidia.
-
+    
 {
   config,
   lib,
@@ -73,6 +71,9 @@ in
         extraPackages = with pkgs; [ nvidia-vaapi-driver ];
         extraPackages32 = with pkgs.pkgsi686Linux; [ nvidia-vaapi-driver ];
       };
+
+      # Hyprland settings
+      environment.sessionVariables.WLR_NO_HARDWARE_CURSORS = "1"; # Fix cursor rendering issue on wlr nvidia.
 
       environment.shellAliases = {nvidia-settings = "nvidia-settings --config='$XDG_CONFIG_HOME'/nvidia/settings";};
     };
