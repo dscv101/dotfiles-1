@@ -16,6 +16,7 @@ in {
   config = mkIf cfg.enable {
     apps.neovim.enable = true;
     apps.tools.direnv.enable = true;
+    apps.vscode.enable  = true;
 
     apps.misc.enable = true;
 

@@ -27,11 +27,10 @@ in {
     ];
 
     home.persist.directories = [
-      ".local/share/nvim"
-      ".vim"
-      ".wakatime"
+      ".config/Code"
+      ".vscode"
     ];
 
-    home.persist.files = [".wakatime.cfg" ".wakatime.bdb"];
+    
   };
 }
